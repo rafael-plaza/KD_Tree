@@ -37,6 +37,34 @@ bool sortPointsY(const PointType<var> &lhs, const PointType<var> &rhs)
 }
 
 
+//region
+template <class elemType>
+class region
+{
+public:
+    //default constructor
+    region();
+    
+    
+    void updateX_left(elemType l_left);
+    void updateX_right(elemType l_right);
+    void updateY_below(elemType l_below);
+    void updtaeY_above(elemType l_above);
+
+    
+private:
+    bool x_LeftBound;
+    bool x_RightBound;
+    bool y_BelowBound;
+    bool y_AboveBound;
+    bool empty;
+    elemType x_min;
+    elemType x_max;
+    elemType y_min;
+    elemType y_max;
+};
+
+
 
 //KD-Tree
 
@@ -118,6 +146,35 @@ int main()
 }
 
 
+template <class elemType>
+region<elemType>::region()
+{
+    x_LeftBound=false;
+    x_RightBound=false;
+    y_AboveBound=false;
+    y_BelowBound=false;
+    empty=false;
+    x_min=0;
+    x_max=0;
+    y_min=0;
+    y_max=0;
+}
+
+template <class elemType>
+void region<elemType>::updateX_left(elemType l_left)
+{
+    if(!empty and x_RightBound and x_min <= l_left and l_left <= x_max)
+        x_max=l_left;
+    else if(!empty and x_min <= l_left)
+        x_max=l_left;
+    else
+        empty=true;
+}
+
+void updateX_left(elemType l_left);
+void updateX_right(elemType l_right);
+void updateY_below(elemType l_below);
+void updtaeY_above(elemType l_above);
 
 template <class elemType>
 KD_Tree<elemType>::KD_Tree()
